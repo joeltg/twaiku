@@ -2,10 +2,10 @@
 Backend for the Twaiku Twitter client
 
 ## synonym api
-get_synonyms(word) -> [String]      
+get_synonyms(String) -> [String]      
 
 ## syllables api
-does_word_exist(word) -> Boolean  
+does_word_exist(String) -> Boolean  
 count_syllables_word(String) -> Int  
 count_syllables_line(String) -> Int    
 count_syllables_haiku([String]) -> [Int]    
