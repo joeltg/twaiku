@@ -1,7 +1,5 @@
 from flask import Flask
 
-from oxford import get_candidates
-
 app = Flask(__name__)
 
 @app.route('/')
