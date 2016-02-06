@@ -3,9 +3,9 @@ import random
 from keys import oxford
 from syllables import count_syllables_word
 
-def get_candidates(string, n=4, model=random.choice(['body', 'title', 'anchor'])):
+def get_candidates(string, n=4):
+    model = random.choice(['body', 'title', 'anchor'])
     print model
-    print string
     params = {'words': string, 'model': model, 'maxNumOfCandidatesReturned': n}
     headers = {'Ocp-Apim-Subscription-Key': oxford}
     url = 'https://api.projectoxford.ai/text/weblm/v1.0/generateNextWords'
