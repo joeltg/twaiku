@@ -1,8 +1,10 @@
 import requests
 from keys import oxford
+from syllables import count_syllables_word
 
-def get_candidates(string, model='body'):
-    params = {'words': string, 'model': model}
+def get_candidates(string, n=4, model='body'):
+    print(string)
+    params = {'words': string, 'model': model, 'maxNumOfCandidatesReturned': n}
     headers = {'Ocp-Apim-Subscription-Key': oxford}
     url = 'https://api.projectoxford.ai/text/weblm/v1.0/generateNextWords'
     r = requests.post(url, params=params, headers=headers)
@@ -10,6 +12,16 @@ def get_candidates(string, model='body'):
         return r.json()['candidates']
     else:
         print('error retrieving canidates from oxford')
-        return r.json()
+        print r.json()
+        return []
 
-print(get_candidates('yesterday I went to the'))
+def get_candidates_in_range(string, max_syllables):
+    # here each candidate is a list of tuples of (word, syllable_count)
+    candidates = []
+    r = get_candidates(string, 20)
+    r.sort(key=lambda c: c['probability'])
+    for candidate in r:
+        s = count_syllables_word(candidate['word'])
+        if s <= max_syllables:
+            candidates.append((candidate['word'], s))
+    return candidates
