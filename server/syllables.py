@@ -2,6 +2,8 @@ __author__ = 'robert'
 
 import nltk
 
+nltk.data.path.append("./nltk_data")
+
 #load the giant dictionary of words
 database = nltk.corpus.cmudict.dict()
 
