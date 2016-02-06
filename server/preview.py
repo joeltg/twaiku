@@ -20,4 +20,8 @@ def complete_range(string, max_syllables):
 
     print 'could not complete'
 
+def complete_haiku(haiku):
+    
+    pass
+
 print complete_range('my', 13)
