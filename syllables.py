@@ -20,6 +20,14 @@ def does_word_exist(word):
     except KeyError, e:
         return False
 
+def estimate_syllables(word):
+    #strategy: count the number of vowels, hackish
+    vowels = ['a', 'e', 'i', 'o', 'u', 'y']
+    count = 0
+    for vowel in vowels:
+        count += word.count(vowel)
+    return count
+
 def count_syllables_word(word):
     """
     Count the number of syllables in a word.
@@ -29,7 +37,7 @@ def count_syllables_word(word):
     #check if word exists
     if does_word_exist(word):
         count = 0
-        pronunciation = database[word.lower()][0]
+        pronunciation = database[word][0]
         for phenome in pronunciation:
             #if the phenome contains a digit in the last character,
             #then it is a syllable
@@ -37,9 +45,9 @@ def count_syllables_word(word):
                 count += 1
         return count
     else:
-        #TODO
         #estimate the number of syllables
-        return 1
+        count = estimate_syllables(word)
+        return count
 
 def count_syllables_line(line):
     """
