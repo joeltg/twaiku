@@ -16,5 +16,3 @@ for word in words:
 
 def auto_complete(word):
     return database.autocomplete(word)
-
-print auto_complete('hel')

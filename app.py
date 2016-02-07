@@ -5,6 +5,9 @@ from geventwebsocket.handler import WebSocketHandler
 import json
 import yaml
 
+from syllables import does_word_exist
+from auto_completion import auto_complete
+
 from graph import *
 print('server running...')
 
@@ -24,22 +27,25 @@ def echo_socket(ws):
         # event is a string
         # data is a string
         # limit is an optional integer
+        data = message['data']
+        path = []
+        total = 0
+        for word in data.split(' '):
+            total += count_syllables_word(word)
+            path.append([word.lower(), total, auto_complete(word.lower())])
         if (message["event"] == 'haiku'):
             print('haiku')
-            data = message['data']
-            response = complete_haiku(data)
+            response = complete_haiku(path)
+            print path_to_string(response)
             ws.send(json.dumps(response))
         elif message["event"] == 'line':
             print('line')
-            data = message['data']
             limit = message['length']
-            print(data, limit)
-            response = complete_line(data, limit)
-            print(response)
+            response = complete_line(path, limit)
             ws.send(json.dumps(response))
         else:
             ws.send("fuck this shit")
 
 if __name__ == '__main__':
-    server = pywsgi.WSGIServer(('0.0.0.0', 8000), app, handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
     server.serve_forever()

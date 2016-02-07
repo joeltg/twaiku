@@ -43,18 +43,10 @@ def get_children(path, limit):
         syllables = count_syllables_word(word)
         length = distance + syllables
         if length <= limit:
-            children.append((word, length, tuple(words)))
+            children.append([word, length, words])
     return children
 
 def complete_haiku(path):
-    if type(path) == str:
-        path = path.lower()
-        p = []
-        total = 0
-        for word in path.split(' '):
-            total += count_syllables_word(word)
-            p.append((word, total))
-        path = p
     distance = 0
     if len(path) > 0:
         distance = path[-1][1]
@@ -83,7 +75,7 @@ def complete_haiku(path):
     if len(path) > 1:
         print('recursing')
         print(path_to_string(path[1:]))
-        return complete_path(path[1:])
+        return complete_haiku(path[1:])
     return []
 
 def complete_line(path, limit):
@@ -120,7 +112,7 @@ def complete_line(path, limit):
     if len(path) > 1:
         print('recursing')
         print(path_to_string(path[1:]))
-        return complete_path(path[1:])
+        return complete_line(path[1:])
     return []
 
 def complete(string):
@@ -129,7 +121,7 @@ def complete(string):
     for word in string.split(' '):
         total += count_syllables_word(word)
         path.append((word, total))
-    return path_to_string(complete_path(path))
+    return path_to_string(complete_haiku(path))
 
 # print complete_path([('Shy', 1)])
 # print complete_path([('Where', 1)])
