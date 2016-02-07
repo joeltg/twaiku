@@ -26,8 +26,18 @@ def estimate_syllables(word):
     #strategy: count the number of vowels, hackish
     vowels = ['a', 'e', 'i', 'o', 'u', 'y']
     count = 0
-    for vowel in vowels:
-        count += word.count(vowel)
+    isVowel = False
+    for index in range(0, len(word)):
+        previous = isVowel
+        letter = word[index]
+        if letter in vowels:
+            isVowel = True
+        if letter not in vowels:
+            isVowel = False
+        if not isVowel and previous:
+            count += 1
+        if index == len(word) - 1 and isVowel:
+            count += 1
     return count
 
 def count_syllables_word(word):
@@ -76,3 +86,5 @@ def count_syllables_haiku(haiku):
         syllables = count_syllables_line(line)
         count.append(syllables)
     return count
+
+print estimate_syllables("battlecode")
