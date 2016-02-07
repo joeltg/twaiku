@@ -1,38 +1,42 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sockets import Sockets
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 import json
 import yaml
 
+from graph import *
+print('server running...')
+
 app = Flask(__name__)
 app.debug = True
 sockets = Sockets(app)
-
-test_message = [
-    [{"text":"while","flag": True}, {"text":"the","flag": False}, {"text":"final","flag": False}, {"text":"say","flag": False}],
-    [{"text":"crazed","flag": False}, {"text":"monosyllables","flag": False}],
-    [{"text":"modesto","flag": False}, {"text":"shallow","flag": False}]
-]
 
 @app.route('/')
 def main():
     return "Hello World"
 
-
-@app.route('/candidates')
-def candidates():
-    return 'hi'
-
-
-@sockets.route('/twaiku')
+@sockets.route('/api')
 def echo_socket(ws):
     while not ws.closed:
         message = ws.receive()
         message = yaml.safe_load(message)
-        print message
+        # event is a string
+        # data is a string
+        # limit is an optional integer
         if (message["event"] == 'haiku'):
-            ws.send(json.dumps(test_message))
+            print('haiku')
+            data = message['data']
+            response = complete_haiku(data)
+            ws.send(json.dumps(response))
+        elif message["event"] == 'line':
+            print('line')
+            data = message['data']
+            limit = message['length']
+            print(data, limit)
+            response = complete_line(data, limit)
+            print(response)
+            ws.send(json.dumps(response))
         else:
             ws.send("fuck this shit")
 

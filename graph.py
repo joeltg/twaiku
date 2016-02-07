@@ -47,6 +47,14 @@ def get_children(path, limit):
     return children
 
 def complete_haiku(path):
+    if type(path) == str:
+        path = path.lower()
+        p = []
+        total = 0
+        for word in path.split(' '):
+            total += count_syllables_word(word)
+            p.append((word, total))
+        path = p
     distance = 0
     if len(path) > 0:
         distance = path[-1][1]
@@ -79,6 +87,14 @@ def complete_haiku(path):
     return []
 
 def complete_line(path, limit):
+    if type(path) == str:
+        path = path.lower()
+        p = []
+        total = 0
+        for word in path.split(' '):
+            total += count_syllables_word(word)
+            p.append((word, total))
+        path = p
     distance = 0
     if len(path) > 0:
         distance = path[-1][1]
