@@ -41,5 +41,5 @@ def echo_socket(ws):
             ws.send("fuck this shit")
 
 if __name__ == '__main__':
-    server = pywsgi.WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    server = pywsgi.WSGIServer(('0.0.0.0', 8000), app, handler_class=WebSocketHandler)
     server.serve_forever()
