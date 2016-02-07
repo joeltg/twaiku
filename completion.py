@@ -14,10 +14,6 @@ model = nltk.NgramModel(3, brown.words(), estimator=est)
 
 def get_next_words(path):
     context = [c[0] for c in path]
-    # if len(path) > 1:
-    #     frame = tuple([w[0] for w in path[-2:]])
-    #     if frame in model:
-    #         return sorted([w for w in model[frame].samples() if w.isalpha()], key=lambda w: model)
 
     words = []
     for i in range(50):
