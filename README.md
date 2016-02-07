@@ -1,6 +1,15 @@
 # twaiku
 Backend for the Twaiku Twitter client
 
+## backend output
+Sample output:
+
+[  
+    [{"text":"Robert","flag": true}, {"text":"Downey","flag": false}, {"text":"charged","flag": false}],  
+    [{"text":"Robert","flag": false}, {"text":"Robert","flag": false}, {"text":"Robert","flag": false}, {"text":"Robert","flag": false}],  
+    [{"text":"modesto","flag": false}, {"text":"shallow","flag": false}]  
+]  
+
 ## synonym api
 get_synonyms(String) -> [String]      
 
