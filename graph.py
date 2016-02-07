@@ -1,5 +1,4 @@
 from syllables import count_syllables_word
-from oxford import get_candidates
 from completion import *
 
 def path_to_string(path):
