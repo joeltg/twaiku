@@ -1,6 +1,6 @@
 """
 A fast data structure for searching strings with autocomplete support.
-https://github.com/vivekn/autocomplete.git
+Courtesy of: https://github.com/vivekn/autocomplete.git
 """
 
 class Trie(object):
