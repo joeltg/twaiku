@@ -7,6 +7,11 @@ nltk.data.path.append("./nltk_data")
 #load the giant dictionary of words
 database = nltk.corpus.cmudict.dict()
 
+def finish_word(prefix):
+    if prefix in database:
+        return prefix
+
+
 #assumptions
 #words only contain letters, and they are lowercase
 

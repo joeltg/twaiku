@@ -4,6 +4,7 @@ from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 import json
 import yaml
+import random
 
 from syllables import does_word_exist
 from auto_completion import auto_complete
@@ -31,12 +32,17 @@ def echo_socket(ws):
         path = []
         total = 0
         for word in data.split(' '):
-            total += count_syllables_word(word)
-            path.append([word.lower(), total, auto_complete(word.lower())])
+            auto = [a for a in auto_complete(word.lower()) if does_word_exist(a)]
+            random.shuffle(auto)
+            if does_word_exist(word):
+                total += count_syllables_word(word)
+            else:
+                total += count_syllables_word(auto[0])
+            path.append([word.lower(), total, auto])
         if (message["event"] == 'haiku'):
             print('haiku')
             response = complete_haiku(path)
-            print path_to_string(response)
+            print path_to_string(path)
             ws.send(json.dumps(response))
         elif message["event"] == 'line':
             print('line')
